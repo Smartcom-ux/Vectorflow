@@ -1,50 +1,43 @@
 package base;
 
-	import java.io.File;
-	import java.time.Duration;
-	import org.openqa.selenium.WebDriver;
-	import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
+import java.io.File;
+import java.time.Duration;
 
-	public class BaseClass {
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 
-	    public static WebDriver driver;
+public class BaseClass {
 
-	    @BeforeClass
-	    public void setUp() {
-	        
-	        String projectPath = System.getProperty("user.dir");
+    public static WebDriver driver;
 
-	       
-	        String driverPath = projectPath + File.separator + "src" + File.separator + "main" 
-	                          + File.separator + "java" + File.separator + "driver" 
-	                          + File.separator + "chromedriver.exe";
+    @BeforeSuite
+    public void setUp() {
 
-	       
-	        System.setProperty("webdriver.chrome.driver", driverPath);
+        String projectPath = System.getProperty("user.dir");
 
-	        
-	        driver = new ChromeDriver();
+        String driverPath = projectPath + File.separator + "src" + File.separator + "main"
+                + File.separator + "java" + File.separator + "driver"
+                + File.separator + "chromedriver.exe";
 
-	        driver.manage().window().maximize();
-	        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        System.setProperty("webdriver.chrome.driver", driverPath);
 
-	        driver.get("https://lab1.vectorflow.app/login");
-	        System.out.println("✅ Browser launched successfully");
-	    }
+        driver = new ChromeDriver();
 
-	    @AfterClass
-	    public void tearDown() {
-	        if (driver != null) {
-	        	
-	        	//System.out.println("⚠️ Skipping driver.quit() for debugging...");
-	            driver.quit();
-	        }
-	    }
-	}
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
+        driver.get("https://lab1.vectorflow.app/login");
 
+        System.out.println("✅ Browser launched successfully");
+    }
 
+    @AfterSuite
+    public void tearDown() {
+        if (driver != null) {
+            System.out.println("❌ Closing browser...");
+            driver.quit();
+        }
+    }
+}

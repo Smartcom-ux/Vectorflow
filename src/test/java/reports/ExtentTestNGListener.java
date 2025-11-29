@@ -9,10 +9,11 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 
+import base.BaseClass;
 import utils.ScreenshotUtil;
 
 public class ExtentTestNGListener implements ITestListener {
-WebDriver driver;
+
     private static ExtentReports extent = ExtentManager.getInstance();
     private static ThreadLocal<ExtentTest> testThread = new ThreadLocal<>();
 
@@ -27,10 +28,21 @@ WebDriver driver;
         testThread.get().log(Status.PASS, "Test Passed");
     }
 
-//    @Override
-//    public void onTestFailure(ITestResult result) {
-//        testThread.get().log(Status.FAIL, "Test Failed: " + result.getThrowable());
-//    }
+    @Override
+    public void onTestFailure(ITestResult result) {
+
+        // Log failure
+        testThread.get().log(Status.FAIL, result.getThrowable());
+
+        // Get driver from BaseClass (NO REFLECTION)
+        WebDriver driver = BaseClass.driver;
+
+        // Take screenshot
+        if (driver != null) {
+            String path = ScreenshotUtil.captureScreenshot(driver, result.getName());
+            testThread.get().addScreenCaptureFromPath(path);
+        }
+    }
 
     @Override
     public void onTestSkipped(ITestResult result) {
@@ -39,18 +51,6 @@ WebDriver driver;
 
     @Override
     public void onFinish(ITestContext context) {
-        extent.flush(); // writes everything to the report
+        extent.flush();
     }
-
-    
-    public void onTestFailure(ITestResult result) {
-        Object testClass = result.getInstance();
-        try {
-            driver = (WebDriver) testClass.getClass().getDeclaredField("driver").get(testClass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        ScreenshotUtil.captureScreenshot(driver, result.getName());
-
-    }  	
 }

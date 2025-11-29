@@ -11,19 +11,19 @@ public class LoginPage {
     WebDriver driver;
 
     @FindBy(xpath = "//input[@name='email']")
-    WebElement usernameTxt;
+   private WebElement usernameTxt;
 
     @FindBy(xpath = "//input[@name='password']")
-    WebElement passwordTxt;
+    private WebElement passwordTxt;
 
     @FindBy(id = "canv")
-    WebElement captchaElement;
+    private WebElement captchaElement;
 
     @FindBy(xpath = "//input[@placeholder='Enter the text here']")
-    WebElement captchaTxt;
+    private WebElement captchaTxt;
 
     @FindBy(xpath = "//span[contains(.,'Submit')]")
-    WebElement loginBtn;
+    private WebElement loginBtn;
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;

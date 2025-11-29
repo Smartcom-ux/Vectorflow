@@ -8,6 +8,7 @@
         <classes>
             <!-- Your test class package path -->
             <class name="test.TC_001loginTest"/>
+             <class name="test.TC_002OrderreScheduling" />
         </classes>
     </test>
     

@@ -3,9 +3,16 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
+      <class name="test.TC_002OrderreScheduling">
+        <methods>
+          <include name="tearDown"/>
+          <include name="setUp"/>
+          <include name="OrderRescheduling"/>
+        </methods>
+      </class> <!-- test.TC_002OrderreScheduling -->
       <class name="test.TC_001loginTest">
         <methods>
-          <include name="login" invocation-numbers="6"/>
+          <include name="login"/>
           <include name="tearDown"/>
           <include name="setUp"/>
         </methods>
