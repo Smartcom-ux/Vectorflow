@@ -1,1 +1,5 @@
 /target/
+/test-output/
+/target/
+/screenshots/
+*.log
